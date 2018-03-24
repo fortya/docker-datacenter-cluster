@@ -126,13 +126,13 @@ module "node-manager-asg" {
   ]
 }
 
-  module "node-dtr-asg" {
+module "node-dtr-asg" {
   source = "terraform-aws-modules/autoscaling/aws"
 
   name           = "${var.service}-${var.service_instance}-dtr-asg"
   load_balancers = ["${module.node-dtr-elb.this_elb_id}"]
 
-  user_data = "${data.template_file.node-manager.rendered}"
+  user_data = "${data.template_file.node-dtr.rendered}"
   key_name  = "${var.ssh_key_name}"
 
   lc_name = "${var.service}-${var.service_instance}-dtr-lc"
