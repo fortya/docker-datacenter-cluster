@@ -1,0 +1,7 @@
+.DS_Store
+*.info
+*.tfstate
+*.tfvars
+*.backup
+.terraform/
+*.vscode/
