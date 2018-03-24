@@ -15,15 +15,13 @@ docker container run --rm -t --name ucp \
   --san ${ELB_MASTER_NODES} \ 
   --san ${ELB_MANAGER_NODES} 
 
-sleep 180
-
 curl -k https://localhost/ca > ucp-ca.pem
 
 docker run -t --rm docker/dtr install \
   --dtr-external-url https://${DTR_PUBLIC_ENDPOINT} \
   --ucp-username ${DOCKER_UCP_USERNAME} \
   --ucp-password ${DOCKER_UCP_PASSWORD} \
-  --ucp-url https://${UCP_PUBLIC_ENDPOINT} \
+  --ucp-url https://$NODE_PUBLIC_IP \
   --ucp-ca "$(cat ucp-ca.pem)" \
   --replica-http-port ${DTR_HTTP_PORT} \
   --replica-https-port ${DTR_HTTPS_PORT} 
