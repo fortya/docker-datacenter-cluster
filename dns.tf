@@ -3,7 +3,7 @@ resource "aws_route53_record" "ucp-nodes" {
   name    = "${var.ucp_endpoint}"
   type    = "CNAME"
   ttl     = "300"
-  records = ["${module.node-manager-elb.this_elb_dns_name}"]
+  records = ["${module.node-master-elb.this_elb_dns_name}"]
 }
 
 resource "aws_route53_record" "dtr-nodes" {
