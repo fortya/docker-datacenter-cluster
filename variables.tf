@@ -29,9 +29,7 @@ variable "aws_region" {
   type    = "string"
   default = "us-west-2"
 }
-variable "alb_log_bucket_name" {
-  type = "string"
-}
+
 variable "ssh_key_name" {
   type = "string"
 }
