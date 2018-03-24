@@ -108,7 +108,7 @@ module "node-dtr-elb" {
     {
       instance_port      = "81"
       instance_protocol  = "HTTP"
-      lb_port            = "81"
+      lb_port            = "80"
       lb_protocol        = "HTTP"
     }
   ]
