@@ -69,7 +69,7 @@ module "node-manager-elb" {
     },
     {
       instance_port      = "2377"
-      instance_protocol  = "TC["
+      instance_protocol  = "TCP"
       lb_port            = "2377"
       lb_protocol        = "TCP"
     }
