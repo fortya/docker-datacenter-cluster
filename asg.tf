@@ -11,7 +11,7 @@ module "node-master-asg" {
 
   image_id        = "${data.aws_ami.ubuntu.id}"
   instance_type   = "t2.medium"
-  security_groups = ["${aws_security_group.node-manager.id}"]
+  security_groups = ["${aws_security_group.node-manager.id}", "${aws_security_group.node-ucp-elb.id}"]
 
   root_block_device = [
     {
