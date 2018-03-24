@@ -38,34 +38,6 @@ resource "aws_security_group" "node-manager" {
   vpc_id      = "${module.vpc.vpc_id}"
 
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 4443
-    to_port     = 4443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  
-  ingress {
-    from_port       = 81
-    to_port         = 81
-    protocol        = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 2375
     to_port     = 2377
     protocol    = "udp"
