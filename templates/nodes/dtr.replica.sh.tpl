@@ -7,7 +7,6 @@ NODE_PRIVATE_IP=$(curl -s 169.254.169.254/latest/meta-data/local-ipv4)
 
 docker swarm join --listen-addr $NODE_PRIVATE_IP:2377 --advertise-addr $NODE_PUBLIC_IP:2377 --token ${UCP_TOKEN} ${UCP_PUBLIC_ENDPOINT}:2377
 
-
 curl -k https://${UCP_PUBLIC_ENDPOINT}/ca > ucp-ca.pem
 
 docker run -t --rm docker/dtr join \
