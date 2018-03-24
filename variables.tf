@@ -36,7 +36,7 @@ variable "ssh_key_name" {
 
 variable "service" {
   type    = "string"
-  default = "cloudcontrol"
+  default = "ddc"
 }
 
 variable "service_owner" {
