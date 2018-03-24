@@ -153,10 +153,6 @@ variable "vpc_public_subnets" {
   default     = ["10.0.101.0/24", "10.0.102.0/24"]
 }
 
-variable "vpc_database_subnets" {
-  default = ["10.0.3.0/24", "10.0.4.0/24"]
-}
-
 variable "availability_zones" {
   description = "AWS region to launch servers; if not set the available zones will be detected automatically"
   type        = "list"
