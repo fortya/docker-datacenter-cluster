@@ -6,7 +6,7 @@ module "node-master-elb" {
   name = "${var.service}-${var.service_instance}-master-elb"
 
   subnets         = ["${module.vpc.public_subnets}"]
-  security_groups = ["${aws_security_group.node-ucp-elb.id}"]
+  security_groups = ["${aws_security_group.node-manager.id}", "${aws_security_group.node-ucp-elb.id}"]
   internal        = false
 
   listener = [
