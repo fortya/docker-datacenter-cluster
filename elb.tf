@@ -115,7 +115,7 @@ module "node-dtr-elb" {
 
   health_check = [
     {
-      target              = "HTTPS:443/_ping"
+      target              = "HTTPS:4443/_ping"
       interval            = 10
       healthy_threshold   = 2
       unhealthy_threshold = 4
