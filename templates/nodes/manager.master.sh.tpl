@@ -17,7 +17,7 @@ docker container run --rm -t --name ucp \
 
 sleep 30
 
-curl -k https://localhost/ca > ucp-ca.pem
+curl -k https://${UCP_PUBLIC_ENDPOINT}/ca > ucp-ca.pem
 
 docker run -t --rm docker/dtr install \
   --dtr-external-url https://${DTR_PUBLIC_ENDPOINT} \
