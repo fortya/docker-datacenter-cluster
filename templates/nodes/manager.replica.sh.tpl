@@ -11,7 +11,7 @@ docker container run --rm -t --name ucp \
   -v /var/run/docker.sock:/var/run/docker.sock \
   docker/ucp join \
   --replica \
-  --host-address ${UCP_PUBLIC_ENDPOINT} \
+  --host-address ${ELB_MASTER_NODES} \
   --admin-username ${DOCKER_UCP_USERNAME} \
   --admin-password ${DOCKER_UCP_PASSWORD} \
   --san ${UCP_PUBLIC_ENDPOINT} \
