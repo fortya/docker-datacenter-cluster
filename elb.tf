@@ -22,6 +22,24 @@ module "node-master-elb" {
       instance_protocol  = "HTTP"
       lb_port            = "80"
       lb_protocol        = "HTTP"
+    },
+    {
+      instance_port      = "2377"
+      instance_protocol  = "TCP"
+      lb_port            = "2377"
+      lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "7946"
+      instance_protocol  = "TCP"
+      lb_port            = "7946"
+      lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "4789"
+      instance_protocol  = "TCP"
+      lb_port            = "4789"
+      lb_protocol        = "TCP"
     }
   ]
 
@@ -72,6 +90,18 @@ module "node-manager-elb" {
       instance_protocol  = "TCP"
       lb_port            = "2377"
       lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "7946"
+      instance_protocol  = "TCP"
+      lb_port            = "7946"
+      lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "4789"
+      instance_protocol  = "TCP"
+      lb_port            = "4789"
+      lb_protocol        = "TCP"
     }
   ]
 
@@ -116,6 +146,24 @@ module "node-dtr-elb" {
       instance_protocol  = "HTTP"
       lb_port            = "80"
       lb_protocol        = "HTTP"
+    },
+    {
+      instance_port      = "2377"
+      instance_protocol  = "TCP"
+      lb_port            = "2377"
+      lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "7946"
+      instance_protocol  = "TCP"
+      lb_port            = "7946"
+      lb_protocol        = "TCP"
+    },
+    {
+      instance_port      = "4789"
+      instance_protocol  = "TCP"
+      lb_port            = "4789"
+      lb_protocol        = "TCP"
     }
   ]
 
