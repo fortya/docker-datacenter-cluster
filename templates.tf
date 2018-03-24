@@ -49,7 +49,7 @@ data "template_file" "node-dtr" {
   template = "${file("${path.module}/templates/nodes/dtr.replica.sh.tpl")}"
 
   vars {
-    UCP_TOKEN           = "${var.ucp_token_manager}"
+    UCP_TOKEN           = "${var.ucp_token_worker}"
     DOCKER_INSTALL      = "${data.template_file.docker.rendered}"
     DOCKER_UCP_VERSION  = "${var.docker_ucp_version}"
     DOCKER_UCP_USERNAME = "${var.ucp_username}"
