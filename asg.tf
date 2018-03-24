@@ -135,7 +135,7 @@ module "node-manager-asg" {
   user_data = "${data.template_file.node-manager.rendered}"
   key_name  = "${var.ssh_key_name}"
 
-  lc_name = "${var.service}-${var.service_instance}-manager-lc"
+  lc_name = "${var.service}-${var.service_instance}-dtr-lc"
 
   image_id        = "${data.aws_ami.ubuntu.id}"
   instance_type   = "t2.medium"
