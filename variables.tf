@@ -10,6 +10,18 @@ variable "manager_node_desired_count" {
   type = "string"
   default = 0
 }
+variable "dtr_node_min_count" {
+  type = "string"
+  default = 0
+}
+variable "dtr_node_max_count" {
+  type = "string"
+  default = 0
+}
+variable "dtr_node_desired_count" {
+  type = "string"
+  default = 0
+}
 
 variable "worker_node_min_count" {
   type = "string"
