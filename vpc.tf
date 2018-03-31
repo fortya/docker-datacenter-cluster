@@ -6,22 +6,21 @@ module "vpc" {
 
   azs = ["${var.availability_zones}"]
 
-  private_subnets  = ["${var.vpc_private_subnets}"]
-  public_subnets   = ["${var.vpc_public_subnets}"]
+  private_subnets = ["${var.vpc_private_subnets}"]
+  public_subnets  = ["${var.vpc_public_subnets}"]
 
-  enable_nat_gateway           = true
-  enable_vpn_gateway           = false
-  enable_dns_hostnames         = true
-  create_database_subnet_group = true
+  enable_nat_gateway   = true
+  enable_vpn_gateway   = false
+  enable_dns_hostnames = true
+
+  # create_database_subnet_group = true
 
   private_subnet_tags = {
     Layer = "private"
   }
-
   public_subnet_tags = {
     Layer = "public"
   }
-
   tags = {
     Owner       = "${var.service_owner}"
     Provisioner = "Terraform"
@@ -40,6 +39,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 2375
     to_port     = 2377
     protocol    = "udp"
+    description = "Port for communication between swarm nodes"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -47,6 +47,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 2375
     to_port     = 2377
     protocol    = "tcp"
+    description = "Port for communication between swarm nodes"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -54,6 +55,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 4789
     to_port     = 4789
     protocol    = "tcp"
+    description = "Port for overlay networking"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -61,6 +63,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 4789
     to_port     = 4789
     protocol    = "udp"
+    description = "Port for overlay networking"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -68,6 +71,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 12376
     to_port     = 12376
     protocol    = "tcp"
+    description = "Port for a TLS proxy that provides access to UCP, Docker Engine, and Docker Swarm"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -75,6 +79,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 12376
     to_port     = 12376
     protocol    = "udp"
+    description = "Port for a TLS proxy that provides access to UCP, Docker Engine, and Docker Swarm"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -96,6 +101,7 @@ resource "aws_security_group" "node-manager" {
     from_port   = 7946
     to_port     = 7946
     protocol    = "tcp"
+    description = "Port for gossip-based clustering"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -103,10 +109,9 @@ resource "aws_security_group" "node-manager" {
     from_port   = 7946
     to_port     = 7946
     protocol    = "udp"
+    description = "Port for gossip-based clustering"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-
 
   ingress {
     from_port   = 22
@@ -206,16 +211,18 @@ resource "aws_security_group" "node-dtr-elb" {
   vpc_id      = "${module.vpc.vpc_id}"
 
   ingress {
-    from_port   = 4443
-    to_port     = 4443
+    from_port   = "${var.dtr_https_port}"
+    to_port     = "${var.dtr_https_port}"
+    description = "DTR ELB HTTPS traffic"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
-    from_port   = 81
-    to_port     = 81
+    from_port   = "${var.dtr_http_port}"
+    to_port     = "${var.dtr_http_port}"
     protocol    = "tcp"
+    description = "DTR ELB HTTP traffic"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -224,7 +231,6 @@ resource "aws_security_group" "node-ucp-elb" {
   name        = "${var.service}-${var.service_instance}-master-elb-sg"
   description = "manager elb"
   vpc_id      = "${module.vpc.vpc_id}"
-
 
   ingress {
     from_port   = 80
@@ -241,5 +247,4 @@ resource "aws_security_group" "node-ucp-elb" {
     description = "Port for the UCP web UI and API"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
 }
