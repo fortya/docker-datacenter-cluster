@@ -1,41 +1,67 @@
+variable "master_node_instance_type" {
+  type    = "string"
+  default = "t2.medium"
+}
+
 variable "manager_node_min_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
+
 variable "manager_node_max_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
+
 variable "manager_node_desired_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
+
+variable "manager_node_instance_type" {
+  type    = "string"
+  default = "t2.medium"
+}
+
 variable "dtr_node_min_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
+
 variable "dtr_node_max_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
+
 variable "dtr_node_desired_count" {
-  type = "string"
+  type    = "string"
   default = 0
+}
+
+variable "dtr_node_instance_type" {
+  type    = "string"
+  default = "t2.medium"
 }
 
 variable "worker_node_min_count" {
-  type = "string"
-  default = 0
-}
-variable "worker_node_max_count" {
-  type = "string"
-  default = 0
-}
-variable "worker_node_desired_count" {
-  type = "string"
+  type    = "string"
   default = 0
 }
 
+variable "worker_node_max_count" {
+  type    = "string"
+  default = 0
+}
+
+variable "worker_node_desired_count" {
+  type    = "string"
+  default = 0
+}
+
+variable "worker_node_instance_type" {
+  type    = "string"
+  default = "t2.small"
+}
 
 variable "aws_region" {
   type    = "string"
@@ -60,6 +86,7 @@ variable "service_stage" {
   type    = "string"
   default = "dev"
 }
+
 variable "service_instance" {
   type = "string"
 }
@@ -74,12 +101,12 @@ variable "manager-ssl-certificate" {
 }
 
 variable "ucp_token_manager" {
-  type = "string"
+  type    = "string"
   default = ""
 }
 
 variable "ucp_token_worker" {
-  type = "string"
+  type    = "string"
   default = ""
 }
 
@@ -94,6 +121,7 @@ variable "ucp_password" {
 variable "ucp_endpoint" {
   type = "string"
 }
+
 variable "dtr_endpoint" {
   type = "string"
 }
@@ -107,10 +135,10 @@ variable "dtr_https_port" {
   type    = "string"
   default = 4443
 }
-variable "dtr_replica_id" {
-  type = "string"
-  default = ""
 
+variable "dtr_replica_id" {
+  type    = "string"
+  default = ""
 }
 
 variable "docker_ee_url" {
@@ -126,6 +154,7 @@ variable "docker_ucp_version" {
   type    = "string"
   default = "2.2.5"
 }
+
 variable "aws_profile" {
   type    = "string"
   default = "default"

@@ -10,7 +10,7 @@ module "node-master-asg" {
   lc_name = "${var.service}-${var.service_instance}-master-lc"
 
   image_id        = "${data.aws_ami.ubuntu.id}"
-  instance_type   = "t2.medium"
+  instance_type   = "${var.master_node_instance_type}"
   security_groups = ["${aws_security_group.node-manager.id}", "${aws_security_group.node-ucp-elb.id}"]
 
   root_block_device = [
@@ -56,7 +56,7 @@ module "node-master-asg" {
     },
     {
       key                 = "Name"
-      value               = "${var.service}-${var.service_instance}-master-"
+      value               = "${var.service}-${var.service_instance}-master"
       propagate_at_launch = true
     },
   ]
@@ -74,7 +74,7 @@ module "node-manager-asg" {
   lc_name = "${var.service}-${var.service_instance}-manager-lc"
 
   image_id        = "${data.aws_ami.ubuntu.id}"
-  instance_type   = "t2.medium"
+  instance_type   = "${var.manager_node_instance_type}"
   security_groups = ["${aws_security_group.node-manager.id}"]
 
   root_block_device = [
@@ -120,7 +120,7 @@ module "node-manager-asg" {
     },
     {
       key                 = "Name"
-      value               = "${var.service}-${var.service_instance}-manager-"
+      value               = "${var.service}-${var.service_instance}-manager"
       propagate_at_launch = true
     },
   ]
@@ -138,7 +138,7 @@ module "node-dtr-asg" {
   lc_name = "${var.service}-${var.service_instance}-dtr-lc"
 
   image_id        = "${data.aws_ami.ubuntu.id}"
-  instance_type   = "t2.medium"
+  instance_type   = "${var.dtr_node_instance_type}"
   security_groups = ["${aws_security_group.node-worker.id}", "${aws_security_group.node-dtr-elb.id}"]
 
   root_block_device = [
@@ -184,13 +184,12 @@ module "node-dtr-asg" {
     },
     {
       key                 = "Name"
-      value               = "${var.service}-${var.service_instance}-dtr-"
+      value               = "${var.service}-${var.service_instance}-dtr"
       propagate_at_launch = true
     },
   ]
 }
-    
-    
+
 module "node-worker-asg" {
   source = "terraform-aws-modules/autoscaling/aws"
 
@@ -202,7 +201,7 @@ module "node-worker-asg" {
   lc_name = "${var.service}-${var.service_instance}-worker-lc"
 
   image_id        = "${data.aws_ami.ubuntu.id}"
-  instance_type   = "t2.small"
+  instance_type   = "${var.worker_node_instance_type}"
   security_groups = ["${aws_security_group.node-worker.id}"]
 
   root_block_device = [
@@ -248,7 +247,7 @@ module "node-worker-asg" {
     },
     {
       key                 = "Name"
-      value               = "${var.service}-${var.service_instance}-worker-"
+      value               = "${var.service}-${var.service_instance}-worker"
       propagate_at_launch = true
     },
   ]
