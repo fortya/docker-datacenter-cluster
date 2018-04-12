@@ -1,8 +1,3 @@
-variable "master_node_instance_type" {
-  type    = "string"
-  default = "t2.medium"
-}
-
 variable "manager_node_min_count" {
   type    = "string"
   default = 0
@@ -100,16 +95,6 @@ variable "manager-ssl-certificate" {
   type = "string"
 }
 
-variable "ucp_token_manager" {
-  type    = "string"
-  default = ""
-}
-
-variable "ucp_token_worker" {
-  type    = "string"
-  default = ""
-}
-
 variable "ucp_username" {
   type = "string"
 }
@@ -186,4 +171,13 @@ variable "availability_zones" {
   description = "AWS region to launch servers; if not set the available zones will be detected automatically"
   type        = "list"
   default     = ["us-west-2a", "us-west-2b"]
+}
+
+variable "global_tags" {
+  type    = "map"
+  default = {}
+}
+
+variable "logs_bucket" {
+  type = "string"
 }
