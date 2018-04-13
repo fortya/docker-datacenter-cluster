@@ -12,7 +12,6 @@ module "vpc" {
   enable_nat_gateway           = true
   enable_vpn_gateway           = false
   enable_dns_hostnames         = true
-  create_database_subnet_group = true
 
   private_subnet_tags = {
     Layer = "private"
