@@ -3,11 +3,6 @@ variable "aws_region" {
   default = "us-west-2"
 }
 
-variable "aws_profile" {
-  type    = "string"
-  default = "default"
-}
-
 variable "service" {
   type    = "string"
   default = "ddc"
