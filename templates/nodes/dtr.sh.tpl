@@ -46,6 +46,9 @@ fi
 echo "Joining swarm"
 docker swarm join --token $WORKER_TOKEN ${MANAGER_SWARM_DNS}:2377
 
+echo "Giving UCP time to finish registering the node"
+sleep 60s
+
 echo "Downloading ucp-ca.pem cert"
 curl -k https://${UCP_PUBLIC_ENDPOINT}/ca > ucp-ca.pem
 
