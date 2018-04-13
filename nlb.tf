@@ -1,8 +1,8 @@
 resource "aws_lb" "swarm_nlb" {
   name               = "${var.service}-${var.service_instance}-swarm-nlb"
   load_balancer_type = "network"
-  subnets            = ["${module.vpc.public_subnets}"]
-  internal           = false
+  subnets            = ["${module.vpc.private_subnets}"]
+  internal           = true
   idle_timeout       = 400
   tags               = "${merge(var.global_tags, map("Name","${var.service}-${var.service_instance}-swarm-nlb"))}"
 }
