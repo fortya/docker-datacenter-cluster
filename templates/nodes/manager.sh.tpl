@@ -17,19 +17,22 @@ if [ $response == "200" ]; then
   while [ $count -lt 1 ]
   do
     count=`aws s3 ls $MANAGER_TOKEN_FILE_IN_S3 | wc -l`
+    if [ $count -lt 1 ]; then
+      sleep 10s
+    fi
   done
 
   aws s3 cp $MANAGER_TOKEN_FILE_IN_S3 ~/join-token.txt
   MANAGER_TOKEN=$(cat ~/join-token.txt)
 
   # join swarm
-  docker swarm join --listen-addr $NODE_PRIVATE_IP:2377 --advertise-addr $NODE_PRIVATE_IP:2377 --token $MANAGER_TOKEN ${MANAGER_SWARM_DNS}:2377
+  docker swarm join --token $MANAGER_TOKEN ${MANAGER_SWARM_DNS}:2377
     
   docker container run --rm -t --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
     docker/ucp:${DOCKER_UCP_VERSION} join \
     --replica \
-    --host-address $NODE_PUBLIC_IP:2377 \
+    --host-address $NODE_PRIVATE_IP \
     --admin-username ${DOCKER_UCP_USERNAME} \
     --admin-password ${DOCKER_UCP_PASSWORD} \
     --san ${UCP_PUBLIC_ENDPOINT} \
@@ -42,9 +45,10 @@ else
   docker container run --rm -t --name ucp \
     -v /var/run/docker.sock:/var/run/docker.sock \
     docker/ucp:${DOCKER_UCP_VERSION} install \
-    --host-address $NODE_PUBLIC_IP:2377 \
+    --host-address $NODE_PRIVATE_IP \
     --admin-username ${DOCKER_UCP_USERNAME} \
     --admin-password ${DOCKER_UCP_PASSWORD} \
+    --controller-port ${UCP_PORT}
     --san ${UCP_PUBLIC_ENDPOINT} \
     --san ${ELB_MANAGER_NODES} 
 

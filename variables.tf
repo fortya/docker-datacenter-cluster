@@ -29,8 +29,9 @@ variable "dtr_node_max_count" {
 }
 
 variable "dtr_node_desired_count" {
-  type    = "string"
-  default = 0
+  type        = "string"
+  description = "It is recommended to have 3, 5, or 7 DTR replicas for HA"
+  default     = 0
 }
 
 variable "dtr_node_instance_type" {
@@ -91,15 +92,15 @@ variable "service_ip_whitelist" {
   default = ["0.0.0.0/0"]
 }
 
-variable "manager-ssl-certificate" {
-  type = "string"
-}
-
 variable "ucp_username" {
   type = "string"
 }
 
 variable "ucp_password" {
+  type = "string"
+}
+
+variable domain {
   type = "string"
 }
 
@@ -113,10 +114,15 @@ variable "dtr_endpoint" {
 
 variable "dtr_http_port" {
   type    = "string"
-  default = 81
+  default = 80
 }
 
 variable "dtr_https_port" {
+  type    = "string"
+  default = 443
+}
+
+variable "ucp_https_port" {
   type    = "string"
   default = 4443
 }

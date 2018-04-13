@@ -134,18 +134,10 @@ resource "aws_security_group" "manager_node" {
   vpc_id      = "${module.vpc.vpc_id}"
 
   ingress {
-    from_port   = 443
-    to_port     = 443
+    from_port   = "${var.ucp_https_port}"
+    to_port     = "${var.ucp_https_port}"
     protocol    = "TCP"
     description = "Allows inboud HTTPS traffic for manager nodes"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "TCP"
-    description = "Allows inboud HTTP traffic for manager nodes"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -219,14 +211,6 @@ resource "aws_security_group" "node_ucp_lb" {
   name        = "${var.service}-${var.service_instance}-manager-elb-sg"
   description = "manager elb"
   vpc_id      = "${module.vpc.vpc_id}"
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "TCP"
-    description = "Port for the UCP web UI and API"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
   ingress {
     from_port   = 443
