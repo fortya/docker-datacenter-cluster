@@ -27,7 +27,7 @@ module "node-dtr-asg" {
   ]
 
   asg_name                  = "${var.service}-${var.service_instance}-dtr-asg"
-  vpc_zone_identifier       = ["${module.vpc.private_subnets}"]
+  vpc_zone_identifier       = ["${module.vpc.public_subnets}"]
   health_check_type         = "EC2"
   min_size                  = "${var.dtr_node_min_count}"
   max_size                  = "${var.dtr_node_max_count}"
