@@ -19,7 +19,7 @@ module "node-worker-asg" {
   ]
 
   asg_name                  = "${var.service}-${var.service_instance}-worker-asg"
-  vpc_zone_identifier       = ["${module.vpc.private_subnets}"]
+  vpc_zone_identifier       = ["${module.vpc.public_subnets}"]
   health_check_type         = "EC2"
   min_size                  = "${var.worker_node_min_count}"
   max_size                  = "${var.worker_node_max_count}"
