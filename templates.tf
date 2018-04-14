@@ -7,60 +7,36 @@ data "template_file" "docker" {
   }
 }
 
-
-data "template_file" "node-master" {
-  template = "${file("${path.module}/templates/nodes/manager.master.sh.tpl")}"
-
-  vars {
-    UCP_PUBLIC_ENDPOINT = "${var.ucp_endpoint}"
-    DTR_PUBLIC_ENDPOINT = "${var.dtr_endpoint}"
-    DTR_HTTP_PORT       = "${var.dtr_http_port}"
-    DTR_HTTPS_PORT      = "${var.dtr_https_port}"
-    ELB_MASTER_NODES    = "${module.node-master-elb.this_elb_dns_name}"
-    ELB_MANAGER_NODES   = "${module.node-manager-elb.this_elb_dns_name}"
-    DOCKER_INSTALL      = "${data.template_file.docker.rendered}"
-    DOCKER_UCP_VERSION  = "${var.docker_ucp_version}"
-    DOCKER_UCP_USERNAME = "${var.ucp_username}"
-    DOCKER_UCP_PASSWORD = "${var.ucp_password}"
-  }
-}
-
 data "template_file" "node-manager" {
-  template = "${file("${path.module}/templates/nodes/manager.replica.sh.tpl")}"
+  template = "${file("${path.module}/templates/nodes/manager.sh.tpl")}"
 
   vars {
-    UCP_TOKEN           = "${var.ucp_token_manager}"
-    DOCKER_INSTALL      = "${data.template_file.docker.rendered}"
-    DOCKER_UCP_VERSION  = "${var.docker_ucp_version}"
-    DOCKER_UCP_USERNAME = "${var.ucp_username}"
-    DOCKER_UCP_PASSWORD = "${var.ucp_password}"
-    UCP_PUBLIC_ENDPOINT = "${var.ucp_endpoint}"
-    ELB_MASTER_NODES    = "${module.node-master-elb.this_elb_dns_name}"
-    ELB_MANAGER_NODES   = "${module.node-manager-elb.this_elb_dns_name}"
-    DTR_HTTP_PORT       = "${var.dtr_http_port}"
-    DTR_HTTPS_PORT      = "${var.dtr_https_port}"
-    DTR_REPLICA_ID      = "${var.dtr_replica_id}"
-    DTR_PUBLIC_ENDPOINT = "${var.dtr_endpoint}"
+    DOCKER_INSTALL                = "${data.template_file.docker.rendered}"
+    DOCKER_UCP_VERSION            = "${var.docker_ucp_version}"
+    DOCKER_UCP_USERNAME           = "${var.ucp_username}"
+    DOCKER_UCP_PASSWORD           = "${var.ucp_password}"
+    ELB_MANAGER_NODES             = "${aws_lb.ucp_lb.dns_name}"
+    MANAGER_SWARM_DNS             = "${aws_lb.swarm_nlb.dns_name}"
+    UCP_PUBLIC_ENDPOINT           = "${var.ucp_subdomain}.${var.domain}"
+    UCP_PORT                      = "${var.ucp_https_port}"
+    S3_CONFIGURATIONS_BUCKET_NAME = "${aws_s3_bucket.configurations.id}"
   }
 }
-
 
 data "template_file" "node-dtr" {
-  template = "${file("${path.module}/templates/nodes/dtr.replica.sh.tpl")}"
+  template = "${file("${path.module}/templates/nodes/dtr.sh.tpl")}"
 
   vars {
-    UCP_TOKEN           = "${var.ucp_token_worker}"
-    DOCKER_INSTALL      = "${data.template_file.docker.rendered}"
-    DOCKER_UCP_VERSION  = "${var.docker_ucp_version}"
-    DOCKER_UCP_USERNAME = "${var.ucp_username}"
-    DOCKER_UCP_PASSWORD = "${var.ucp_password}"
-    UCP_PUBLIC_ENDPOINT = "${var.ucp_endpoint}"
-    ELB_MASTER_NODES    = "${module.node-master-elb.this_elb_dns_name}"
-    ELB_MANAGER_NODES   = "${module.node-manager-elb.this_elb_dns_name}"
-    DTR_HTTP_PORT       = "${var.dtr_http_port}"
-    DTR_HTTPS_PORT      = "${var.dtr_https_port}"
-    DTR_REPLICA_ID      = "${var.dtr_replica_id}"
-    DTR_PUBLIC_ENDPOINT = "${var.dtr_endpoint}"
+    DOCKER_INSTALL                = "${data.template_file.docker.rendered}"
+    DOCKER_UCP_USERNAME           = "${var.ucp_username}"
+    DOCKER_UCP_PASSWORD           = "${var.ucp_password}"
+    DTR_HTTP_PORT                 = "${var.dtr_http_port}"
+    DTR_HTTPS_PORT                = "${var.dtr_https_port}"
+    DTR_REPLICA_ID                = "${random_id.dtr_replica_id.hex}"
+    DTR_PUBLIC_ENDPOINT           = "${var.dtr_subdomain}.${var.domain}"
+    UCP_PUBLIC_ENDPOINT           = "${var.ucp_subdomain}.${var.domain}"
+    MANAGER_SWARM_DNS             = "${aws_lb.swarm_nlb.dns_name}"
+    S3_CONFIGURATIONS_BUCKET_NAME = "${aws_s3_bucket.configurations.id}"
   }
 }
 
@@ -68,8 +44,8 @@ data "template_file" "node-worker" {
   template = "${file("${path.module}/templates/nodes/worker.sh.tpl")}"
 
   vars {
-    UCP_PUBLIC_ENDPOINT = "${var.ucp_endpoint}"
-    DOCKER_INSTALL      = "${data.template_file.docker.rendered}"
-    UCP_TOKEN           = "${var.ucp_token_worker}"
+    DOCKER_INSTALL                = "${data.template_file.docker.rendered}"
+    MANAGER_SWARM_DNS             = "${aws_lb.swarm_nlb.dns_name}"
+    S3_CONFIGURATIONS_BUCKET_NAME = "${aws_s3_bucket.configurations.id}"
   }
 }
